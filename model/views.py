@@ -8,7 +8,7 @@ import pymssql
 import re
 # Create your views here.
 def connent():
-    conn = pymssql.connect(host="172.16.5.16", user='sa', password='sa', database='ProductCommant', charset='utf8')
+    conn = pymssql.connect(host="******", user='sa', password='sa', database='ProductCommant', charset='utf8')
     cursor = conn.cursor()
     sql = '''select * from ZFXXMODELCAL'''
     cursor.execute(sql)
