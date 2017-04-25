@@ -1,0 +1,201 @@
+{% extends "zero.html" %}
+
+{% block title %}正负面词优化趋势图{% endblock %}
+
+{% block content %}
+	<script src="/static/js/echarts.js"></script>
+	<div id="mainFigure" style="width: 1700px;height:800px;"></div>
+	<script type="text/javascript">
+		var DATA = {{ DATA|safe }};
+		var myChart = echarts.init(document.getElementById('mainFigure'));
+		var option = {
+			title: {
+				text: DATA['text']
+			},
+			tooltip: {
+				trigger: 'axis'
+			},
+			toolbox: {
+		        feature: {
+		            dataView: {show: true, readOnly: false},
+		            magicType: {show: true, type: ['line', 'bar']},
+		            restore: {show: true},
+		            saveAsImage: {show: true}
+		        }
+		    },
+		    color:['#007979','#7E3D76','#BB3D00','#007979','#7E3D76','#BB3D00'],
+			legend: {
+				data:DATA['legend'],
+				textStyle:{
+				  fontSize:20,
+        },
+			},
+			grid: {
+				left: '3%',
+				right: '4%',
+				bottom: '3%',
+				containLabel: true
+			},
+			xAxis: {
+				type: 'category',
+				boundaryGap: true,
+				data: DATA['time'],
+			},
+			yAxis: {
+				type: 'value',
+				name: '比率',
+				min: 0,
+		        max: 1,
+		        interval: 0.1,
+		        },
+			series: [
+				{
+					name:'原_整体准确率',
+					type:'line',
+					symbolSize: 10,
+					symbol:'circle',
+					data: DATA['zzq_list'],
+					lineStyle:{
+		              normal:{
+		                color:'#007979',
+		              },
+		             },
+				},
+				{
+            		name:'原_整体召回率',
+            		type:'line',
+            		symbolSize: 10,
+            		symbol:'circle',
+            		data: DATA['zz_list'],
+            		lineStyle:{
+		              normal:{
+		                color:"#7E3D76",
+		              },
+		             },
+        		},
+        		{
+            		name:'原_F1',
+            		type:'line',
+            		symbolSize: 10,
+            		symbol:'circle',
+            		data: DATA['f1_list'],
+            		lineStyle:{
+		              normal:{
+		                color:"#BB3D00",
+		              },
+		             },
+        		},
+        		{
+            		name:'改进_整体准确率',
+            		type:'line',
+            		symbolSize: 10,
+            		symbol:'triangle',
+            		data: DATA['n_zzq_list'],
+            		lineStyle:{
+		              normal:{
+		                color:"#007979",
+		                type:"dashed",
+		              },
+		             },
+        		},
+        		{
+            		name:'改进_整体召回率',
+            		type:'line',
+            		symbolSize: 10,
+            		symbol:'triangle',
+            		data: DATA['n_zz_list'],
+            		lineStyle:{
+		              normal:{
+		                color:"#7E3D76",
+		                type:"dashed",
+		              },
+		             },
+        		},
+        		{
+            		name:'改进_F1',
+            		type:'line',
+            		symbolSize: 10,
+            		symbol:'triangle',
+            		data: DATA['n_f1_list'],
+            		lineStyle:{
+		              normal:{
+		                color:"#BB3D00",
+		                type:"dashed",
+		              },
+		             },
+        		},
+			],
+			dataZoom: [
+		        {
+		            show: true,
+		            realtime: true,
+		            start: 0,
+		            end: 100,
+		            xAxisIndex: [0]
+		        },
+		        {
+		            type: 'inside',
+		            realtime: true,
+		            start: 0,
+		            end: 100,
+		            xAxisIndex: [0]
+		        }
+    		],
+		};
+
+		myChart.setOption(option);
+	</script>
+<!--<div  style="margin-left:70px;">-->
+  <!--<b>下表为最近一次报告 医疗 及 汇总 语料相关数据:</b>-->
+  <!--<table style="text-align:center;width:1180px;height:35px" width="800" border="1" class="ta">-->
+  <!--<tr bgcolor=#ADADAD>-->
+    <!--<th style="text-align:center;width:100px;">医疗</th>-->
+    <!--<td>负面召回率</td>-->
+    <!--<td>整体准确率</td>-->
+    <!--<td>整体召回率</td>-->
+    <!--<td>F1</td>-->
+  <!--</tr>-->
+  <!--<tr>-->
+    <!--<td>秘书判断</td>-->
+    <!--<td><script>document.write(DATA['fmzh_yiliao']);</script></td>-->
+    <!--<td><script>document.write(DATA['ztzq_yiliao']);</script></td>-->
+    <!--<td><script>document.write(DATA['gj_ztzh_yiliao']);</script></td>-->
+    <!--<td><script>document.write(DATA['gj_f1_yiliao']);</script></td>-->
+  <!--</tr>-->
+  <!--<tr>-->
+    <!--<td>改进秘书判断</td>-->
+    <!--<td><script>document.write(DATA['gj_fmzh_yiliao']);</script></td>-->
+    <!--<td><script>document.write(DATA['gj_ztzq_yiliao']);</script></td>-->
+    <!--<td><script>document.write(DATA['gj_ztzh_yiliao']);</script></td>-->
+    <!--<td><script>document.write(DATA['gj_f1_yiliao']);</script></td>-->
+  <!--</tr>-->
+  <!--</table>-->
+  <!--<tr>&nbsp;</tr>-->
+  <!--<table style="text-align:center;width:1180px;height:35px" width="800" border="1" class="ta" padding-left:1000px>-->
+  <!--<tr bgcolor=#ADADAD>-->
+    <!--<th style="text-align:center;width:100px;">汇总</th>-->
+    <!--<td>负面召回率</td>-->
+    <!--<td>整体准确率</td>-->
+    <!--<td>整体召回率</td>-->
+    <!--<td>F1</td>-->
+  <!--</tr>-->
+  <!--<tr>-->
+    <!--<td>秘书判断</td>-->
+    <!--<td><script>document.write(DATA['fmzh']);</script></td>-->
+    <!--<td><script>document.write(DATA['ztzq']);</script></td>-->
+    <!--<td><script>document.write(DATA['ztzh']);</script></td>-->
+    <!--<td><script>document.write(DATA['f1']);</script></td>-->
+  <!--</tr>-->
+  <!--<tr>-->
+    <!--<td>改进秘书判断</td>-->
+    <!--<td><script>document.write(DATA['gj_fmzh']);</script></td>-->
+    <!--<td><script>document.write(DATA['gj_ztzq']);</script></td>-->
+    <!--<td><script>document.write(DATA['gj_ztzh']);</script></td>-->
+    <!--<td><script>document.write(DATA['gj_f1']);</script></td>-->
+  <!--</tr>-->
+  <!--</table>-->
+<!--</div>-->
+	<!--<div class="btn-group">-->
+        	<!--<a class="btn btn-primary" href="/model/region/download/include/{{ ID }}/">下载</a>-->
+	<!--</div>-->
+{% endblock %}

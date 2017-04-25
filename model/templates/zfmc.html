@@ -1,0 +1,32 @@
+{% extends "zero.html" %}
+
+{% block title %}正负面词优化趋势图{% endblock %}
+
+{% block content %}
+<div class="time">
+	数据更新时间：{{ date }}
+</div>
+<tr>&nbsp;</tr>
+<table class="table table-hover table-condensed">
+    <tbody>
+    <tr>
+        <td>秘书判断（负面召回率）优化对比</td>
+        <td>
+            <a href="/model/zfmc/1/" target="_blank" target="_blank">SHOW</a>
+        </td>
+    </tr>
+    <tr>
+        <td>秘书判断优化对比（医疗结果）</td>
+        <td>
+            <a href="/model/zfmc/2/" target="_blank" target="_blank">SHOW</a>
+        </td>
+    </tr>
+    <tr>
+        <td>秘书判断优化对比（政府结果）</td>
+        <td>
+            <a href="/model/zfmc/3/" target="_blank" target="_blank">SHOW</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+{% endblock %}
